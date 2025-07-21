@@ -1,14 +1,12 @@
 import pyopenms as oms
 import os
 import fnmatch
-data_list=[]
+mzML_files=[]
 pattern = '*.mzML'
 for root, dirs, files in os.walk("./Original"):
     for name in files:
         if fnmatch.fnmatch(name, pattern):
-            data_list.append(os.path.join(root, name))
-mzML_files = data_list
-mzML_files
+            mzML_files.append(os.path.join(root, name))
 
 for file in mzML_files:
     exp = oms.MSExperiment()

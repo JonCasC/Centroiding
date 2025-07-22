@@ -16,3 +16,4 @@ for file in mzML_files:
     centroided_spectra = oms.MSExperiment()
     oms.PeakPickerHiRes().pickExperiment(exp, centroided_spectra, True)
     oms.MzMLFile().store("./Centroided/" + file[:-5] + "_centroided.mzML", centroided_spectra)
+    del exp

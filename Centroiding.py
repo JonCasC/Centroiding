@@ -12,11 +12,15 @@ def center(file_name: str)->None:
     exp.setMetaValue("mzML_path", file_name)
     centroided_spectra = oms.MSExperiment()
     oms.PeakPickerHiRes().pickExperiment(exp, centroided_spectra, True)
-    oms.MzMLFile().store("./Centroided/" + file_name[11:-5] + "_centroided.mzML", centroided_spectra)
+    base_name = os.path.splitext(os.path.basename(file_name))[0]
+    output_dir = "./Centroided"
+    os.makedirs(output_dir, exist_ok=True)
+    output_path = os.path.join(output_dir, f"{base_name}_centroided.mzML")
+    oms.MzMLFile().store(output_path, centroided_spectra)
     del exp
 
 if __name__ == "__main__":
-    print("Looking for sepcta")
+    print("Looking for spectra")
     
     mzML_files=[]
     pattern = '*.mzML'
@@ -31,5 +35,5 @@ if __name__ == "__main__":
     for file in tqdm(mzML_files):
         center(file)
         
-    print(f"Succesfully centroided {len(mzML_files)} specrta!")
-    sys.exit(1)
+    print(f"Successfully centroided {len(mzML_files)} spectra!")
+    sys.exit(0)

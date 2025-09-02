@@ -6,6 +6,11 @@ import sys
 
 
 def center(file_name: str)->None:
+    """Centroid the given mzML file.
+
+    Args:
+        file_name (str): The path to the .mzML file to centroid.
+    """
     exp = oms.MSExperiment()
     oms.MzMLFile().load(file_name, exp)
     exp.sortSpectra(True)
@@ -14,12 +19,12 @@ def center(file_name: str)->None:
     oms.PeakPickerHiRes().pickExperiment(exp, centroided_spectra, True)
     base_name = os.path.splitext(os.path.basename(file_name))[0]
     output_dir = "./Centroided"
-    os.makedirs(output_dir, exist_ok=True)
     output_path = os.path.join(output_dir, f"{base_name}_centroided.mzML")
     oms.MzMLFile().store(output_path, centroided_spectra)
     del exp
 
 if __name__ == "__main__":
+    os.makedirs("./Centroided", exist_ok=True)
     print("Looking for spectra")
     
     mzML_files=[]

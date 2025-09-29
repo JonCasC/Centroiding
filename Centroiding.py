@@ -1,6 +1,5 @@
 import pyopenms as oms
 import os
-import fnmatch
 from tqdm import tqdm
 import sys
 
@@ -27,12 +26,11 @@ if __name__ == "__main__":
     os.makedirs("./Centroided", exist_ok=True)
     print("Looking for spectra")
     
-    mzML_files=[]
-    pattern = '*.mzML'
+    mzML_files = []
     
     for root, dirs, files in os.walk("./Original"):
         for name in files:
-            if fnmatch.fnmatch(name, pattern):
+            if os.path.splitext(name)[1].lower() == '.mzml':
                 mzML_files.append(os.path.join(root, name))
     
     print(f"{len(mzML_files)} spectra found\nBegin centroiding")
